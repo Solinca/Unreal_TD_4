@@ -16,3 +16,8 @@ void ABaseEnemy::SetPlayerCatchSpeed()
 	GetCharacterMovement()->MaxWalkSpeed = PlayerCatchSpeed;
 }
 
+ECHARACTER_GROUP ABaseEnemy::GetCharacterGroup_Implementation()
+{
+	return ECHARACTER_GROUP::ENEMY;
+}
+

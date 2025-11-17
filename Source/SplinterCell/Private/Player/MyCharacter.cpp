@@ -12,3 +12,8 @@ AMyCharacter::AMyCharacter()
 
 	Camera->SetupAttachment(SpringArm);
 }
+
+ECHARACTER_GROUP AMyCharacter::GetCharacterGroup_Implementation()
+{
+	return ECHARACTER_GROUP::PLAYER;
+}

@@ -2,12 +2,13 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include <Camera/CameraComponent.h>
-#include <GameFramework/SpringArmComponent.h>
+#include "Camera/CameraComponent.h"
+#include "GameFramework/SpringArmComponent.h"
+#include "Interfaces/Groupable.h"
 #include "MyCharacter.generated.h"
 
 UCLASS()
-class SPLINTERCELL_API AMyCharacter : public ACharacter
+class SPLINTERCELL_API AMyCharacter : public ACharacter, public IGroupable
 {
 	GENERATED_BODY()
 
@@ -19,4 +20,7 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Components")
 	TObjectPtr<UCameraComponent> Camera = nullptr;
+
+public:
+	virtual ECHARACTER_GROUP GetCharacterGroup_Implementation() override;
 };

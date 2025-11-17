@@ -5,10 +5,11 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Engine/TargetPoint.h"
+#include "Interfaces/Groupable.h"
 #include "BaseEnemy.generated.h"
 
 UCLASS()
-class SPLINTERCELL_API ABaseEnemy : public ACharacter
+class SPLINTERCELL_API ABaseEnemy : public ACharacter, public IGroupable
 {
 	GENERATED_BODY()
 
@@ -26,4 +27,6 @@ public:
 	TArray<ATargetPoint*> GetPatrolPoints();
 
 	void SetPlayerCatchSpeed();
+
+	virtual ECHARACTER_GROUP GetCharacterGroup_Implementation() override;
 };
