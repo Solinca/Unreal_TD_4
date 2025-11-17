@@ -1,4 +1,5 @@
 #include "Enemy/BaseEnemy.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 ABaseEnemy::ABaseEnemy()
 {
@@ -8,5 +9,10 @@ ABaseEnemy::ABaseEnemy()
 TArray<ATargetPoint*> ABaseEnemy::GetPatrolPoints()
 {
 	return PatrolPoints;
+}
+
+void ABaseEnemy::SetPlayerCatchSpeed()
+{
+	GetCharacterMovement()->MaxWalkSpeed = PlayerCatchSpeed;
 }
 

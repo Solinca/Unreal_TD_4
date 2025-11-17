@@ -18,7 +18,12 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrol")
 	TArray<TObjectPtr<ATargetPoint>> PatrolPoints;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Settings")
+	float PlayerCatchSpeed = 1500.f;
+
 public:
 	UFUNCTION(BlueprintCallable)
 	TArray<ATargetPoint*> GetPatrolPoints();
+
+	void SetPlayerCatchSpeed();
 };

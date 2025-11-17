@@ -3,3 +3,10 @@
 ABaseEnemyController::ABaseEnemyController()
 {
 }
+
+void ABaseEnemyController::BeginPlay()
+{
+	Super::BeginPlay();
+
+	RunBehaviorTree(BaseTree);
+}

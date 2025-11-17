@@ -68,8 +68,8 @@ protected:
 	TArray<FInputData> InputDatas;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input|Settings")
-	float CameraSensitivity = 50.0f;
+	float CameraSensitivity = 50.f;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input|Settings")
-	float PlayerSprintFactor = 2.0f;
+	float PlayerSprintFactor = 2.f;
 };

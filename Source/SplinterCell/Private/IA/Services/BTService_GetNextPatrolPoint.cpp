@@ -5,7 +5,9 @@
 
 UBTService_GetNextPatrolPoint::UBTService_GetNextPatrolPoint()
 {
-	NodeName = "Search For Next Patrol Point";
+	NodeName = "Get Next Patrol Point";
+
+	bNotifyBecomeRelevant = true;
 }
 
 void UBTService_GetNextPatrolPoint::OnBecomeRelevant(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
@@ -26,8 +28,6 @@ void UBTService_GetNextPatrolPoint::OnBecomeRelevant(UBehaviorTreeComponent& Own
 
 	if (ABaseEnemy* BaseEnemy = Cast<ABaseEnemy>(Pawn))
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 3, FColor::Red, "Test");
-
 		PatrolIndex = (PatrolIndex + 1) % BaseEnemy->GetPatrolPoints().Num();
 
 		OwnerComp.GetBlackboardComponent()->SetValueAsVector(TargetLocation.SelectedKeyName, BaseEnemy->GetPatrolPoints()[PatrolIndex]->GetActorLocation());

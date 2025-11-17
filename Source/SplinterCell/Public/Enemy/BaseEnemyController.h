@@ -11,4 +11,8 @@ class SPLINTERCELL_API ABaseEnemyController : public AAIController
 
 protected:
 	ABaseEnemyController();
+	virtual void BeginPlay() override;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Behavior Tree")
+	TObjectPtr<UBehaviorTree> BaseTree = nullptr;
 };
