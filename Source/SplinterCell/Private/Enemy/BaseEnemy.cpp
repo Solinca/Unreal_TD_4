@@ -10,11 +10,6 @@ ABaseEnemy::ABaseEnemy()
 	AlertVFXComponent->SetupAttachment(RootComponent);
 }
 
-void ABaseEnemy::BeginPlay()
-{
-	Super::BeginPlay();
-}
-
 TArray<ATargetPoint*> ABaseEnemy::GetPatrolPoints()
 {
 	return PatrolPoints;

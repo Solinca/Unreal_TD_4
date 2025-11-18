@@ -14,7 +14,6 @@ class SPLINTERCELL_API ABaseEnemy : public ACharacter, public IGroupable
 
 protected:
 	ABaseEnemy();
-	virtual void BeginPlay() override;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Patrol")
 	TArray<TObjectPtr<ATargetPoint>> PatrolPoints;
