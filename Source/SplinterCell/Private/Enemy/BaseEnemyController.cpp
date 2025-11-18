@@ -16,15 +16,19 @@ void ABaseEnemyController::BeginPlay()
 
 		AIPerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &ABaseEnemyController::OnTargetPerceptionUpdated);
 	}
+
+	EnemyPawn = Cast<ABaseEnemy>(GetPawn());
 }
 
 void ABaseEnemyController::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 {
-	if (Actor->Implements<UGroupable>())
+	if (GetBlackboardComponent()->GetValueAsEnum(FName("EnemyState")) != (uint8) EENEMY_STATE::ALERTED && Actor->Implements<UGroupable>())
 	{
 		if (IGroupable::Execute_GetCharacterGroup(Actor) == ECHARACTER_GROUP::PLAYER)
 		{
 			GetBlackboardComponent()->SetValueAsEnum(FName("EnemyState"), (uint8) EENEMY_STATE::ALERTED);
+
+			EnemyPawn->TriggerAlertVFX();
 		}
 	}
 }

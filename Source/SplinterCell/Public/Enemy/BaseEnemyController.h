@@ -4,6 +4,7 @@
 #include "AIController.h"
 #include "Perception/AIPerceptionComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "BaseEnemy.h"
 #include "BaseEnemyController.generated.h"
 
 UENUM(BlueprintType)
@@ -18,6 +19,9 @@ UCLASS()
 class SPLINTERCELL_API ABaseEnemyController : public AAIController
 {
 	GENERATED_BODY()
+
+private:
+	ABaseEnemy* EnemyPawn;
 
 protected:
 	ABaseEnemyController();

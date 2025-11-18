@@ -1,11 +1,10 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Engine/TargetPoint.h"
 #include "Interfaces/Groupable.h"
+#include "NiagaraComponent.h"
 #include "BaseEnemy.generated.h"
 
 UCLASS()
@@ -15,18 +14,23 @@ class SPLINTERCELL_API ABaseEnemy : public ACharacter, public IGroupable
 
 protected:
 	ABaseEnemy();
+	virtual void BeginPlay() override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrol")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Patrol")
 	TArray<TObjectPtr<ATargetPoint>> PatrolPoints;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Settings")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Settings")
 	float PlayerCatchSpeed = 1500.f;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "VFX")
+	TObjectPtr<UNiagaraComponent> AlertVFXComponent = nullptr;
+
 public:
-	UFUNCTION(BlueprintCallable)
 	TArray<ATargetPoint*> GetPatrolPoints();
 
 	void SetPlayerCatchSpeed();
+
+	void TriggerAlertVFX();
 
 	virtual ECHARACTER_GROUP GetCharacterGroup_Implementation() override;
 };

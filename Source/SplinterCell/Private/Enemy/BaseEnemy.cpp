@@ -4,6 +4,15 @@
 ABaseEnemy::ABaseEnemy()
 {
 	PrimaryActorTick.bCanEverTick = false;
+
+	AlertVFXComponent = CreateDefaultSubobject<UNiagaraComponent>("Alert VFX");
+
+	AlertVFXComponent->SetupAttachment(RootComponent);
+}
+
+void ABaseEnemy::BeginPlay()
+{
+	Super::BeginPlay();
 }
 
 TArray<ATargetPoint*> ABaseEnemy::GetPatrolPoints()
@@ -14,6 +23,11 @@ TArray<ATargetPoint*> ABaseEnemy::GetPatrolPoints()
 void ABaseEnemy::SetPlayerCatchSpeed()
 {
 	GetCharacterMovement()->MaxWalkSpeed = PlayerCatchSpeed;
+}
+
+void ABaseEnemy::TriggerAlertVFX()
+{
+	AlertVFXComponent->Activate();
 }
 
 ECHARACTER_GROUP ABaseEnemy::GetCharacterGroup_Implementation()
