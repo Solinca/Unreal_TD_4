@@ -9,9 +9,6 @@ class SPLINTERCELL_API UBTService_GetNextPatrolPoint : public UBTService
 {
 	GENERATED_BODY()
 
-private:
-	int PatrolIndex = 0;
-	
 protected:
 	UBTService_GetNextPatrolPoint();
 

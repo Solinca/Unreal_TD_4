@@ -14,9 +14,16 @@ ABaseEnemy::ABaseEnemy()
 	SuspicionVFXComponent->SetupAttachment(RootComponent);
 }
 
-TArray<ATargetPoint*> ABaseEnemy::GetPatrolPoints()
+FVector ABaseEnemy::GetNextPatrolPointLocation()
 {
-	return PatrolPoints;
+	if (PatrolPoints.Num() > 0)
+	{
+		PatrolIndex = (PatrolIndex + 1) % PatrolPoints.Num();
+
+		return PatrolPoints[PatrolIndex]->GetActorLocation();
+	}
+
+	return GetActorLocation();
 }
 
 void ABaseEnemy::SetPlayerCatchSpeed()

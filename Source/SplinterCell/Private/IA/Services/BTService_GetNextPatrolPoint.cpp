@@ -28,11 +28,6 @@ void UBTService_GetNextPatrolPoint::OnBecomeRelevant(UBehaviorTreeComponent& Own
 
 	if (ABaseEnemy* BaseEnemy = Cast<ABaseEnemy>(Pawn))
 	{
-		if (BaseEnemy->GetPatrolPoints().Num() > 0)
-		{
-			PatrolIndex = (PatrolIndex + 1) % BaseEnemy->GetPatrolPoints().Num();
-
-			OwnerComp.GetBlackboardComponent()->SetValueAsVector(TargetLocation.SelectedKeyName, BaseEnemy->GetPatrolPoints()[PatrolIndex]->GetActorLocation());
-		}
+		OwnerComp.GetBlackboardComponent()->SetValueAsVector(TargetLocation.SelectedKeyName, BaseEnemy->GetNextPatrolPointLocation());
 	}
 }

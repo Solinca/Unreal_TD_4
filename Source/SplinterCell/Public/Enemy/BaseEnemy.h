@@ -12,6 +12,9 @@ class SPLINTERCELL_API ABaseEnemy : public ACharacter, public IGroupable
 {
 	GENERATED_BODY()
 
+private:
+	int PatrolIndex = 0;
+
 protected:
 	ABaseEnemy();
 
@@ -28,7 +31,7 @@ protected:
 	TObjectPtr<UNiagaraComponent> SuspicionVFXComponent = nullptr;
 
 public:
-	TArray<ATargetPoint*> GetPatrolPoints();
+	FVector GetNextPatrolPointLocation();
 
 	void SetPlayerCatchSpeed();
 
