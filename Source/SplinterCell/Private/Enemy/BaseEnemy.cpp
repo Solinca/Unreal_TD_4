@@ -8,6 +8,10 @@ ABaseEnemy::ABaseEnemy()
 	AlertVFXComponent = CreateDefaultSubobject<UNiagaraComponent>("Alert VFX");
 
 	AlertVFXComponent->SetupAttachment(RootComponent);
+
+	SuspicionVFXComponent = CreateDefaultSubobject<UNiagaraComponent>("Suspicion VFX");
+
+	SuspicionVFXComponent->SetupAttachment(RootComponent);
 }
 
 TArray<ATargetPoint*> ABaseEnemy::GetPatrolPoints()
@@ -23,6 +27,11 @@ void ABaseEnemy::SetPlayerCatchSpeed()
 void ABaseEnemy::TriggerAlertVFX()
 {
 	AlertVFXComponent->Activate();
+}
+
+void ABaseEnemy::TriggerSuspicionVFX()
+{
+	SuspicionVFXComponent->Activate();
 }
 
 ECHARACTER_GROUP ABaseEnemy::GetCharacterGroup_Implementation()

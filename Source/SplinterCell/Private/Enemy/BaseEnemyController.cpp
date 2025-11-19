@@ -1,5 +1,7 @@
 #include "Enemy/BaseEnemyController.h"
 #include "Interfaces/Groupable.h"
+#include "Perception/AISense_Sight.h"
+#include "Perception/AISense_Hearing.h"
 
 ABaseEnemyController::ABaseEnemyController()
 {
@@ -22,13 +24,28 @@ void ABaseEnemyController::BeginPlay()
 
 void ABaseEnemyController::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 {
-	if (GetBlackboardComponent()->GetValueAsEnum(FName("EnemyState")) != (uint8) EENEMY_STATE::ALERTED && Actor->Implements<UGroupable>())
-	{
-		if (IGroupable::Execute_GetCharacterGroup(Actor) == ECHARACTER_GROUP::PLAYER)
-		{
-			GetBlackboardComponent()->SetValueAsEnum(FName("EnemyState"), (uint8) EENEMY_STATE::ALERTED);
+	TSubclassOf<UAISense> SenseClass = UAIPerceptionSystem::GetSenseClassForStimulus(GetWorld(), Stimulus);
 
-			EnemyPawn->TriggerAlertVFX();
+	if (SenseClass == UAISense_Sight::StaticClass())
+	{
+		if (GetBlackboardComponent()->GetValueAsEnum(FName("EnemyState")) != (uint8)EENEMY_STATE::ALERTED && Actor->Implements<UGroupable>())
+		{
+			if (IGroupable::Execute_GetCharacterGroup(Actor) == ECHARACTER_GROUP::PLAYER)
+			{
+				GetBlackboardComponent()->SetValueAsEnum(FName("EnemyState"), (uint8)EENEMY_STATE::ALERTED);
+
+				EnemyPawn->TriggerAlertVFX();
+			}
+		}
+	}
+	else if (SenseClass == UAISense_Hearing::StaticClass())
+	{
+		if (GetBlackboardComponent()->GetValueAsEnum(FName("EnemyState")) != (uint8)EENEMY_STATE::ALERTED)
+		{
+			GetBlackboardComponent()->SetValueAsEnum(FName("EnemyState"), (uint8)EENEMY_STATE::SUSPICIOUS);
+			GetBlackboardComponent()->SetValueAsVector(FName("TargetLocation"), Stimulus.StimulusLocation);
+
+			EnemyPawn->TriggerSuspicionVFX();
 		}
 	}
 }
