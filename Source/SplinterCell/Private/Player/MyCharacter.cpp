@@ -22,13 +22,6 @@ UAISense_Sight::EVisibilityResult AMyCharacter::CanBeSeenFrom(const FCanBeSeenFr
 
 	bool IsHit = GetWorld()->LineTraceSingleByProfile(HitResult, Context.ObserverLocation, GetMesh()->GetSocketLocation("head"), FName("Pawn"), FCollisionQueryParams("", false, Context.IgnoreActor));
 
-	if (!IsHit)
-	{
-		DrawDebugLine(GetWorld(), Context.ObserverLocation, GetActorLocation(), FColor::Red);
-
-		IsHit = GetWorld()->LineTraceSingleByProfile(HitResult, Context.ObserverLocation, GetActorLocation(), FName("Pawn"), FCollisionQueryParams("", false, Context.IgnoreActor));
-	}
-
 	return (IsHit && HitResult.GetActor() == this) ? UAISense_Sight::EVisibilityResult::Visible : UAISense_Sight::EVisibilityResult::NotVisible;
 }
 
