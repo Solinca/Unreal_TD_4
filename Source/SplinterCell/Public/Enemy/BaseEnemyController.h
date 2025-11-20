@@ -25,6 +25,7 @@ private:
 
 protected:
 	ABaseEnemyController();
+
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Components")

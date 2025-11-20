@@ -29,3 +29,8 @@ ECHARACTER_GROUP AMyCharacter::GetCharacterGroup_Implementation()
 {
 	return ECHARACTER_GROUP::PLAYER;
 }
+
+FName AMyCharacter::GetItemSocketName()
+{
+	return ItemSocketName;
+}

@@ -28,6 +28,8 @@ void AMyPlayerController::BeginPlay()
 	MyChara = Cast<AMyCharacter>(GetPawn());
 
 	DefaultMaxSpeed = MyChara->GetCharacterMovement()->MaxWalkSpeed;
+
+	MyPlayerState = GetPlayerState<AMyPlayerState>();
 }
 
 void AMyPlayerController::SetupInputComponent()
@@ -78,4 +80,38 @@ void AMyPlayerController::CrouchStart(const FInputActionValue& Value)
 void AMyPlayerController::CrouchStop(const FInputActionValue& Value)
 {
 	MyChara->UnCrouch();
+}
+
+void AMyPlayerController::Grab(const FInputActionValue& Value)
+{
+	if (MyPlayerState->GrabNearestItem())
+	{
+		MyPlayerState->GetCurrentlyHeldItem()->AttachToPlayerHand(MyChara->GetMesh(), MyChara->GetItemSocketName());
+	}
+}
+
+void AMyPlayerController::AimStart(const FInputActionValue& Value)
+{
+	if (MyPlayerState->GetCurrentlyHeldItem())
+	{
+		IsAiming = true;
+	}
+}
+
+void AMyPlayerController::AimStop(const FInputActionValue& Value)
+{
+	IsAiming = false;
+}
+
+void AMyPlayerController::Throw(const FInputActionValue& Value)
+{
+	if (IsAiming && MyPlayerState->GetCurrentlyHeldItem())
+	{
+		// Add Force and Direction to Throw based on camera with settings
+		MyPlayerState->GetCurrentlyHeldItem()->ThrowItem();
+
+		MyPlayerState->RemoveCurrentlyHeldItem();
+
+		IsAiming = false;
+	}
 }

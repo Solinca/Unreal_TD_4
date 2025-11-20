@@ -6,6 +6,8 @@
 #include "InputAction.h"
 #include "InputMappingContext.h"
 #include "MyCharacter.h"
+#include "MyPlayerState.h"
+#include "Items/GrabbableItem.h"
 #include "MyPlayerController.generated.h"
 
 USTRUCT(BlueprintType)
@@ -31,7 +33,11 @@ class SPLINTERCELL_API AMyPlayerController : public APlayerController
 private:
 	AMyCharacter* MyChara = nullptr;
 
+	AMyPlayerState* MyPlayerState = nullptr;
+
 	float DefaultMaxSpeed = 0;
+
+	bool IsAiming = false;
 
 #if WITH_EDITOR
 	UFUNCTION(BlueprintInternalUseOnly)
@@ -55,10 +61,24 @@ private:
 
 	UFUNCTION(BlueprintCallable)
 	void CrouchStop(const FInputActionValue& Value);
+
+	UFUNCTION(BlueprintCallable)
+	void Grab(const FInputActionValue& Value);
+
+	UFUNCTION(BlueprintCallable)
+	void AimStart(const FInputActionValue& Value);
+
+	UFUNCTION(BlueprintCallable)
+	void AimStop(const FInputActionValue& Value);
+
+	UFUNCTION(BlueprintCallable)
+	void Throw(const FInputActionValue& Value);
 	
 protected:
 	AMyPlayerController();
+
 	virtual void BeginPlay() override;
+
 	virtual void SetupInputComponent() override;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input|Mapping")
