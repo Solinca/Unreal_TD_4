@@ -92,10 +92,7 @@ void AMyPlayerController::Grab(const FInputActionValue& Value)
 
 void AMyPlayerController::AimStart(const FInputActionValue& Value)
 {
-	if (MyPlayerState->GetCurrentlyHeldItem())
-	{
-		IsAiming = true;
-	}
+	IsAiming = MyPlayerState->GetCurrentlyHeldItem() != nullptr;
 }
 
 void AMyPlayerController::AimStop(const FInputActionValue& Value)
@@ -105,13 +102,10 @@ void AMyPlayerController::AimStop(const FInputActionValue& Value)
 
 void AMyPlayerController::Throw(const FInputActionValue& Value)
 {
-	if (IsAiming && MyPlayerState->GetCurrentlyHeldItem())
+	if (IsAiming)
 	{
-		// Add Force and Direction to Throw based on camera with settings
-		MyPlayerState->GetCurrentlyHeldItem()->ThrowItem();
+		MyPlayerState->GetCurrentlyHeldItem()->ThrowItem(GetControlRotation().Vector() * ThrowForce);
 
 		MyPlayerState->RemoveCurrentlyHeldItem();
-
-		IsAiming = false;
 	}
 }

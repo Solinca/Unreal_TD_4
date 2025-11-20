@@ -29,8 +29,17 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Components")
 	TObjectPtr<USphereComponent> Sphere = nullptr;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Sound Settings")
+	TObjectPtr<USoundBase> BreakSound = nullptr;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Sound Settings")
+	float BreakSoundVolume = 1;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Settings")
-	float RespawnTime = 5.f;
+	float RespawnTime = 2.f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Settings")
+	float NoiseRange = 1000.f;
 
 	UFUNCTION()
 	void OverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
@@ -44,5 +53,5 @@ protected:
 public:
 	void AttachToPlayerHand(USceneComponent* PlayerMesh, FName SocketName);
 
-	void ThrowItem();
+	void ThrowItem(FVector Force);
 };

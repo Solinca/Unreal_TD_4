@@ -92,4 +92,7 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input|Settings")
 	float PlayerSprintFactor = 2.f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input|Settings")
+	float ThrowForce = 10000.f;
 };

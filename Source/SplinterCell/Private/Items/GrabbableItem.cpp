@@ -2,6 +2,7 @@
 #include "Interfaces/Groupable.h"
 #include "Kismet/GameplayStatics.h"
 #include "Player/MyPlayerState.h"
+#include "Perception/AISense_Hearing.h"
 
 AGrabbableItem::AGrabbableItem()
 {
@@ -48,6 +49,10 @@ void AGrabbableItem::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor
 	Mesh->SetVisibility(false, true);
 	Sphere->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
+	UAISense_Hearing::ReportNoiseEvent(GetWorld(), Hit.Location, 1, this, NoiseRange);
+
+	UGameplayStatics::PlaySound2D(GetWorld(), BreakSound, BreakSoundVolume);
+
 	GetWorld()->GetTimerManager().SetTimer(Handle, this, &AGrabbableItem::RespawnAfterTime, RespawnTime, false);
 
 	Mesh->OnComponentHit.RemoveDynamic(this, &AGrabbableItem::OnHit);
@@ -60,13 +65,13 @@ void AGrabbableItem::AttachToPlayerHand(USceneComponent* PlayerMesh, FName Socke
 	Mesh->OnComponentHit.AddDynamic(this, &AGrabbableItem::OnHit);
 }
 
-void AGrabbableItem::ThrowItem()
+void AGrabbableItem::ThrowItem(FVector Force)
 {
 	Mesh->SetSimulatePhysics(true);
 
 	DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
 
-	// Add Force
+	Mesh->AddImpulse(Force);
 }
 
 void AGrabbableItem::RespawnAfterTime()
