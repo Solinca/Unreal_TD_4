@@ -32,7 +32,5 @@ void UBTService_GetPlayerPosition::TickNode(UBehaviorTreeComponent& OwnerComp, u
 		return;
 	}
 
-	BaseEnemy->SetPlayerCatchSpeed();
-
 	OwnerComp.GetBlackboardComponent()->SetValueAsVector(TargetLocation.SelectedKeyName, MyChar->GetActorLocation());
 }

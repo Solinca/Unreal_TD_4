@@ -23,6 +23,11 @@ class SPLINTERCELL_API ABaseEnemyController : public AAIController
 private:
 	ABaseEnemy* EnemyPawn;
 
+	FVector StartingLocation;
+
+	UFUNCTION()
+	void OnCheckpointRestart();
+
 protected:
 	ABaseEnemyController();
 

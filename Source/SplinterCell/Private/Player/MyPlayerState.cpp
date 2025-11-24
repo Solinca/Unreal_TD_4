@@ -38,3 +38,14 @@ void AMyPlayerState::RemoveCurrentlyHeldItem()
 {
 	CurrentlyHeldItem = nullptr;
 }
+
+void AMyPlayerState::RegisterNewCheckpoint(FVector CheckpointPosition, FRotator CheckpointRotation)
+{
+	LatestCheckpoint.Position = CheckpointPosition;
+	LatestCheckpoint.Rotation = CheckpointRotation;
+}
+
+FCheckpointInfo AMyPlayerState::GetLatestCheckpoint()
+{
+	return LatestCheckpoint;
+}

@@ -7,6 +7,7 @@
 #include "InputMappingContext.h"
 #include "MyCharacter.h"
 #include "MyPlayerState.h"
+#include "MyGameStateBase.h"
 #include "Items/GrabbableItem.h"
 #include "MyPlayerController.generated.h"
 
@@ -33,11 +34,15 @@ class SPLINTERCELL_API AMyPlayerController : public APlayerController
 private:
 	AMyCharacter* MyChara = nullptr;
 
+	AMyGameStateBase* MyGameState = nullptr;
+
 	AMyPlayerState* MyPlayerState = nullptr;
 
 	float DefaultMaxSpeed = 0;
 
 	bool IsAiming = false;
+
+	bool IsDying = false;
 
 #if WITH_EDITOR
 	UFUNCTION(BlueprintInternalUseOnly)
@@ -73,6 +78,12 @@ private:
 
 	UFUNCTION(BlueprintCallable)
 	void Throw(const FInputActionValue& Value);
+
+	UFUNCTION()
+	void OnPlayerDeath();
+
+	UFUNCTION()
+	void OnCheckpointRestart();
 	
 protected:
 	AMyPlayerController();
@@ -95,4 +106,10 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input|Settings")
 	float ThrowForce = 10000.f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Sound Settings")
+	TObjectPtr<USoundBase> DyingSound = nullptr;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Sound Settings")
+	float DyingSoundVolume = 1;
 };

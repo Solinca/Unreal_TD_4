@@ -1,6 +1,7 @@
 #include "Player/MyPlayerController.h"
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 AMyPlayerController::AMyPlayerController()
@@ -29,7 +30,13 @@ void AMyPlayerController::BeginPlay()
 
 	DefaultMaxSpeed = MyChara->GetCharacterMovement()->MaxWalkSpeed;
 
+	MyGameState = Cast<AMyGameStateBase>(UGameplayStatics::GetGameState(GetWorld()));
+
+	MyGameState->OnPlayerDeath.AddUniqueDynamic(this, &AMyPlayerController::OnPlayerDeath);
+
 	MyPlayerState = GetPlayerState<AMyPlayerState>();
+
+	MyPlayerState->RegisterNewCheckpoint(MyChara->GetActorLocation(), GetControlRotation());
 }
 
 void AMyPlayerController::SetupInputComponent()
@@ -108,4 +115,48 @@ void AMyPlayerController::Throw(const FInputActionValue& Value)
 
 		MyPlayerState->RemoveCurrentlyHeldItem();
 	}
+}
+
+void AMyPlayerController::OnPlayerDeath()
+{
+	if (!IsDying)
+	{
+		IsDying = true;
+
+		DisableInput(this);
+
+		PlayerCameraManager->StartCameraFade(0, 1, 3, FColor::Black, true, true);
+
+		UGameplayStatics::PlaySound2D(GetWorld(), DyingSound, DyingSoundVolume);
+
+		if (MyPlayerState->GetCurrentlyHeldItem())
+		{
+			MyPlayerState->GetCurrentlyHeldItem()->ThrowItem(FVector::Zero());
+
+			MyPlayerState->RemoveCurrentlyHeldItem();
+		}
+
+		FTimerHandle Handle;
+
+		GetWorld()->GetTimerManager().SetTimer(Handle, this, &AMyPlayerController::OnCheckpointRestart, 4, false);
+	}
+}
+
+void AMyPlayerController::OnCheckpointRestart()
+{
+	IsDying = false;
+
+	PlayerCameraManager->StartCameraFade(1, 0, 1, FColor::Black, true, false);
+
+	MyChara->SetActorLocation(MyPlayerState->GetLatestCheckpoint().Position);
+	
+	SetControlRotation(MyPlayerState->GetLatestCheckpoint().Rotation);
+
+	MyChara->UnCrouch();
+
+	MyChara->GetCharacterMovement()->MaxWalkSpeed = DefaultMaxSpeed;
+
+	EnableInput(this);
+
+	MyGameState->OnCheckpointRestart.Broadcast();
 }

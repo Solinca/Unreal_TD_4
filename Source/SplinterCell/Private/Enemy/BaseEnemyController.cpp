@@ -1,5 +1,7 @@
 #include "Enemy/BaseEnemyController.h"
 #include "Interfaces/Groupable.h"
+#include "Kismet/GameplayStatics.h"
+#include "Player/MyGameStateBase.h"
 #include "Perception/AISense_Sight.h"
 #include "Perception/AISense_Hearing.h"
 
@@ -20,11 +22,20 @@ void ABaseEnemyController::BeginPlay()
 	}
 
 	EnemyPawn = Cast<ABaseEnemy>(GetPawn());
+
+	StartingLocation = EnemyPawn->GetActorLocation();
+
+	Cast<AMyGameStateBase>(UGameplayStatics::GetGameState(GetWorld()))->OnCheckpointRestart.AddUniqueDynamic(this, &ABaseEnemyController::OnCheckpointRestart);
 }
 
 void ABaseEnemyController::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 {
 	TSubclassOf<UAISense> SenseClass = UAIPerceptionSystem::GetSenseClassForStimulus(GetWorld(), Stimulus);
+
+	if (!Stimulus.IsActive())
+	{
+		return;
+	}
 
 	if (SenseClass == UAISense_Sight::StaticClass())
 	{
@@ -35,6 +46,8 @@ void ABaseEnemyController::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus 
 				GetBlackboardComponent()->SetValueAsEnum(FName("EnemyState"), (uint8)EENEMY_STATE::ALERTED);
 
 				EnemyPawn->TriggerAlertVFX();
+
+				EnemyPawn->SetPlayerCatchSpeed();
 			}
 		}
 	}
@@ -48,4 +61,15 @@ void ABaseEnemyController::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus 
 			EnemyPawn->TriggerSuspicionVFX();
 		}
 	}
+}
+
+void ABaseEnemyController::OnCheckpointRestart()
+{
+	EnemyPawn->SetActorLocation(StartingLocation);
+
+	EnemyPawn->ResetSpeed();
+
+	EnemyPawn->ResetPatrolIndex();
+
+	GetBlackboardComponent()->SetValueAsEnum(FName("EnemyState"), (uint8)EENEMY_STATE::CALM);
 }

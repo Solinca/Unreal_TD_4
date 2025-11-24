@@ -5,6 +5,7 @@
 #include "Engine/TargetPoint.h"
 #include "Interfaces/Groupable.h"
 #include "NiagaraComponent.h"
+#include "Player/MyGameStateBase.h"
 #include "BaseEnemy.generated.h"
 
 UCLASS()
@@ -15,8 +16,14 @@ class SPLINTERCELL_API ABaseEnemy : public ACharacter, public IGroupable
 private:
 	int PatrolIndex = 0;
 
+	float StartingSpeed;
+
+	AMyGameStateBase* MyGameState = nullptr;
+
 protected:
 	ABaseEnemy();
+
+	virtual void BeginPlay() override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Patrol")
 	TArray<TObjectPtr<ATargetPoint>> PatrolPoints;
@@ -30,10 +37,17 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
 	TObjectPtr<UNiagaraComponent> SuspicionVFXComponent = nullptr;
 
+	UFUNCTION()
+	void OnComponentHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+
 public:
 	FVector GetNextPatrolPointLocation();
 
+	void ResetPatrolIndex();
+
 	void SetPlayerCatchSpeed();
+
+	void ResetSpeed();
 
 	void TriggerAlertVFX();
 

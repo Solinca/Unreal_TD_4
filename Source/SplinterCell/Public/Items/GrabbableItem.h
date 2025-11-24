@@ -15,8 +15,6 @@ private:
 
 	FVector StartingLocation;
 	FRotator StartingRotation;
-
-	void RespawnAfterTime();
 	
 protected:
 	AGrabbableItem();
@@ -54,4 +52,6 @@ public:
 	void AttachToPlayerHand(USceneComponent* PlayerMesh, FName SocketName);
 
 	void ThrowItem(FVector Force);
+
+	void RespawnAfterTime();
 };
