@@ -3,6 +3,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerState.h"
 #include "Items/GrabbableItem.h"
+#include "Camera/CameraComponent.h"
 #include "MyPlayerState.generated.h"
 
 USTRUCT()
@@ -14,6 +15,9 @@ struct FCheckpointInfo
 
 	FRotator Rotation;
 };
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnPlayerEnterHideSpotSignature, AActor*, HideSpot);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnPlayerExitHideSpotSignature);
 
 UCLASS()
 class SPLINTERCELL_API AMyPlayerState : public APlayerState
@@ -45,4 +49,10 @@ public:
 	void RegisterNewCheckpoint(FVector CheckpointPosition, FRotator CheckpointRotation);
 
 	FCheckpointInfo GetLatestCheckpoint();
+
+	UPROPERTY(EditDefaultsOnly, BlueprintCallable)
+	FOnPlayerEnterHideSpotSignature OnPlayerEnterHideSpot;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintCallable)
+	FOnPlayerExitHideSpotSignature OnPlayerExitHideSpot;
 };

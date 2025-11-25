@@ -9,6 +9,7 @@
 #include "MyPlayerState.h"
 #include "MyGameStateBase.h"
 #include "Items/GrabbableItem.h"
+#include "Camera/CameraComponent.h"
 #include "MyPlayerController.generated.h"
 
 USTRUCT(BlueprintType)
@@ -84,6 +85,12 @@ private:
 
 	UFUNCTION()
 	void OnCheckpointRestart();
+
+	UFUNCTION()
+	void OnPlayerEnterHideSpot(AActor* HideSpot);
+
+	UFUNCTION()
+	void OnPlayerExitHideSpot();
 	
 protected:
 	AMyPlayerController();
@@ -112,4 +119,13 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Sound Settings")
 	float DyingSoundVolume = 1;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Fade Settings")
+	float HideSpotCameraBlendTime = 0.33f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Fade Settings")
+	float DeathFadeInTime = 3;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Fade Settings")
+	float DeathFadeOutTime = 1;
 };

@@ -37,6 +37,10 @@ void AMyPlayerController::BeginPlay()
 	MyPlayerState = GetPlayerState<AMyPlayerState>();
 
 	MyPlayerState->RegisterNewCheckpoint(MyChara->GetActorLocation(), GetControlRotation());
+
+	MyPlayerState->OnPlayerEnterHideSpot.AddUniqueDynamic(this, &AMyPlayerController::OnPlayerEnterHideSpot);
+
+	MyPlayerState->OnPlayerExitHideSpot.AddUniqueDynamic(this, &AMyPlayerController::OnPlayerExitHideSpot);
 }
 
 void AMyPlayerController::SetupInputComponent()
@@ -125,7 +129,7 @@ void AMyPlayerController::OnPlayerDeath()
 
 		DisableInput(this);
 
-		PlayerCameraManager->StartCameraFade(0, 1, 3, FColor::Black, true, true);
+		PlayerCameraManager->StartCameraFade(0, 1, DeathFadeInTime, FColor::Black, true, true);
 
 		UGameplayStatics::PlaySound2D(GetWorld(), DyingSound, DyingSoundVolume);
 
@@ -146,7 +150,7 @@ void AMyPlayerController::OnCheckpointRestart()
 {
 	IsDying = false;
 
-	PlayerCameraManager->StartCameraFade(1, 0, 1, FColor::Black, true, false);
+	PlayerCameraManager->StartCameraFade(1, 0, DeathFadeOutTime, FColor::Black, true, false);
 
 	MyChara->SetActorLocation(MyPlayerState->GetLatestCheckpoint().Position);
 	
@@ -159,4 +163,14 @@ void AMyPlayerController::OnCheckpointRestart()
 	EnableInput(this);
 
 	MyGameState->OnCheckpointRestart.Broadcast();
+}
+
+void AMyPlayerController::OnPlayerEnterHideSpot(AActor* HideSpot)
+{
+	SetViewTargetWithBlend(HideSpot, HideSpotCameraBlendTime);
+}
+
+void AMyPlayerController::OnPlayerExitHideSpot()
+{
+	SetViewTargetWithBlend(MyChara, HideSpotCameraBlendTime);
 }
