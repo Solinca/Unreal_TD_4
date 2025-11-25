@@ -29,12 +29,9 @@ void ABaseEnemy::BeginPlay()
 
 void ABaseEnemy::OnComponentHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
-	if (OtherActor->Implements<UGroupable>())
+	if (OtherActor->Implements<UGroupable>() && IGroupable::Execute_GetCharacterGroup(OtherActor) == ECHARACTER_GROUP::PLAYER)
 	{
-		if (IGroupable::Execute_GetCharacterGroup(OtherActor) == ECHARACTER_GROUP::PLAYER)
-		{
-			MyGameState->OnPlayerDeath.Broadcast();
-		}
+		MyGameState->OnPlayerDeath.Broadcast();
 	}
 }
 

@@ -39,16 +39,13 @@ void ABaseEnemyController::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus 
 
 	if (SenseClass == UAISense_Sight::StaticClass())
 	{
-		if (GetBlackboardComponent()->GetValueAsEnum(FName("EnemyState")) != (uint8)EENEMY_STATE::ALERTED && Actor->Implements<UGroupable>())
+		if (GetBlackboardComponent()->GetValueAsEnum(FName("EnemyState")) != (uint8)EENEMY_STATE::ALERTED && Actor->Implements<UGroupable>() && IGroupable::Execute_GetCharacterGroup(Actor) == ECHARACTER_GROUP::PLAYER)
 		{
-			if (IGroupable::Execute_GetCharacterGroup(Actor) == ECHARACTER_GROUP::PLAYER)
-			{
-				GetBlackboardComponent()->SetValueAsEnum(FName("EnemyState"), (uint8)EENEMY_STATE::ALERTED);
+			GetBlackboardComponent()->SetValueAsEnum(FName("EnemyState"), (uint8)EENEMY_STATE::ALERTED);
 
-				EnemyPawn->TriggerAlertVFX();
+			EnemyPawn->TriggerAlertVFX();
 
-				EnemyPawn->SetPlayerCatchSpeed();
-			}
+			EnemyPawn->SetPlayerCatchSpeed();
 		}
 	}
 	else if (SenseClass == UAISense_Hearing::StaticClass())
