@@ -69,4 +69,6 @@ void ABaseEnemyController::OnCheckpointRestart()
 	EnemyPawn->ResetPatrolIndex();
 
 	GetBlackboardComponent()->SetValueAsEnum(FName("EnemyState"), (uint8)EENEMY_STATE::CALM);
+
+	GetBlackboardComponent()->ClearValue(FName("TargetLocation"));
 }
