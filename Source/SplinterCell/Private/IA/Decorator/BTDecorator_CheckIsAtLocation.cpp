@@ -12,7 +12,7 @@ UBTDecorator_CheckIsAtLocation::UBTDecorator_CheckIsAtLocation()
 	bNotifyBecomeRelevant = true;
 	bNotifyCeaseRelevant = true;
 
-	MaxDistance = 150.f;
+	MaxDistance = 50.f;
 }
 
 void UBTDecorator_CheckIsAtLocation::InitializeFromAsset(UBehaviorTree& Asset)
@@ -45,7 +45,7 @@ bool UBTDecorator_CheckIsAtLocation::CalculateRawConditionValue(UBehaviorTreeCom
 		return false;
 	}
 
-	return FVector::Dist(Pawn->GetActorLocation(), OwnerComp.GetBlackboardComponent()->GetValueAsVector(TargetLocation.SelectedKeyName)) < MaxDistance;
+	return FVector::DistXY(Pawn->GetActorLocation(), OwnerComp.GetBlackboardComponent()->GetValueAsVector(TargetLocation.SelectedKeyName)) < MaxDistance;
 }
 
 void UBTDecorator_CheckIsAtLocation::OnBecomeRelevant(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)

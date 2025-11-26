@@ -127,7 +127,6 @@ void AMyPlayerController::Throw(const FInputActionValue& Value)
 
 void AMyPlayerController::OpenPauseMenu(const FInputActionValue& Value)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, "Open pause menu");
 	PauseMenu->AddToViewport();
 
 	DisableInput(this);
@@ -195,7 +194,6 @@ void AMyPlayerController::OnPlayerExitHideSpot()
 
 void AMyPlayerController::OnResumeGame()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, "On Resume Game Listened");
 	PauseMenu->RemoveFromParent();
 
 	EnableInput(this);
@@ -209,6 +207,5 @@ void AMyPlayerController::OnResumeGame()
 
 void AMyPlayerController::OnQuitGame()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, "On Quit Game Listened");
 	UKismetSystemLibrary::QuitGame(GetWorld(), this, EQuitPreference::Quit, true);
 }
