@@ -49,6 +49,8 @@ Controls during a Hide Spot are the same as usual, so it may be counter-intuitiv
 
 Main Music: https://downloads.khinsider.com/game-soundtracks/album/metal-gear-solid-original-soundtrack/06.%2520Encounter.mp3
 
+Victory Music: https://www.youtube.com/watch?v=PlqKwDznPlU
+
 
 Alert Sound: https://www.myinstants.com/en/instant/metal-gear-solid-alert/
 
