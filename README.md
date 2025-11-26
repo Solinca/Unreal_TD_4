@@ -58,6 +58,8 @@ Death Sound: https://www.myinstants.com/en/instant/metal-gear-solid-death-78313/
 
 Bottle Break Sound: https://pixabay.com/sound-effects/glass-crack-363162/
 
+Footstep Sound: https://pixabay.com/sound-effects/concrete-footsteps-6752/
+
 
 Player Mesh and Animations: https://www.fab.com/listings/64c53af0-dcb7-4483-9d65-5cbc84bd9a93
 
