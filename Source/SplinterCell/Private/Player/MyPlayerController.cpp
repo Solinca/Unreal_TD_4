@@ -34,6 +34,8 @@ void AMyPlayerController::BeginPlay()
 
 	MyGameState->OnPlayerDeath.AddUniqueDynamic(this, &AMyPlayerController::OnPlayerDeath);
 
+	MyGameState->OnPlayerVictory.AddUniqueDynamic(this, &AMyPlayerController::OnPlayerVictory);
+
 	MyPlayerState = GetPlayerState<AMyPlayerState>();
 
 	MyPlayerState->RegisterNewCheckpoint(MyChara->GetActorLocation(), GetControlRotation());
@@ -161,6 +163,22 @@ void AMyPlayerController::OnPlayerDeath()
 
 		GetWorld()->GetTimerManager().SetTimer(Handle, this, &AMyPlayerController::OnCheckpointRestart, 4, false);
 	}
+}
+
+void AMyPlayerController::OnPlayerVictory()
+{
+	DisableInput(this);
+
+	PlayerCameraManager->StartCameraFade(0, 1, VictoryFadeInTime, FColor::Black, true, true);
+
+	FTimerHandle Handle;
+
+	GetWorld()->GetTimerManager().SetTimer(Handle, this, &AMyPlayerController::ChangeToVictoryLevel, VictoryFadeInTime);
+}
+
+void AMyPlayerController::ChangeToVictoryLevel()
+{
+	UGameplayStatics::OpenLevel(GetWorld(), FName("Victory"));
 }
 
 void AMyPlayerController::OnCheckpointRestart()

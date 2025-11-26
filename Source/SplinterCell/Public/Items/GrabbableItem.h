@@ -14,6 +14,7 @@ private:
 	FTimerHandle Handle;
 
 	FVector StartingLocation;
+
 	FRotator StartingRotation;
 	
 protected:

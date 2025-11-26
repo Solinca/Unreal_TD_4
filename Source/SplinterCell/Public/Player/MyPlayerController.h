@@ -92,6 +92,12 @@ private:
 	void OnPlayerDeath();
 
 	UFUNCTION()
+	void OnPlayerVictory();
+
+	UFUNCTION()
+	void ChangeToVictoryLevel();
+
+	UFUNCTION()
 	void OnCheckpointRestart();
 
 	UFUNCTION()
@@ -145,4 +151,7 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Fade Settings")
 	float DeathFadeOutTime = 1;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Fade Settings")
+	float VictoryFadeInTime = 1;
 };

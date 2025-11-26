@@ -4,8 +4,7 @@
 #include "GameFramework/GameStateBase.h"
 #include "MyGameStateBase.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnPlayerDeathSignature);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnCheckpointRestartSignature);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FGlobalEventSignature);
 
 UCLASS()
 class SPLINTERCELL_API AMyGameStateBase : public AGameStateBase
@@ -14,8 +13,11 @@ class SPLINTERCELL_API AMyGameStateBase : public AGameStateBase
 
 public:
 	UPROPERTY(BlueprintAssignable)
-	FOnPlayerDeathSignature OnPlayerDeath;
+	FGlobalEventSignature OnPlayerDeath;
 
 	UPROPERTY(BlueprintAssignable)
-	FOnCheckpointRestartSignature OnCheckpointRestart;
+	FGlobalEventSignature OnCheckpointRestart;
+
+	UPROPERTY(BlueprintAssignable)
+	FGlobalEventSignature OnPlayerVictory;
 };
