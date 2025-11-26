@@ -50,9 +50,9 @@ public:
 
 	FCheckpointInfo GetLatestCheckpoint();
 
-	UPROPERTY(EditDefaultsOnly, BlueprintCallable)
+	UPROPERTY(EditDefaultsOnly, BlueprintCallable, Category = "Events")
 	FOnPlayerEnterHideSpotSignature OnPlayerEnterHideSpot;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintCallable)
+	UPROPERTY(EditDefaultsOnly, BlueprintCallable, Category = "Events")
 	FOnPlayerExitHideSpotSignature OnPlayerExitHideSpot;
 };

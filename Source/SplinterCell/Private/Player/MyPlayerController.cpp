@@ -41,6 +41,10 @@ void AMyPlayerController::BeginPlay()
 	MyPlayerState->OnPlayerEnterHideSpot.AddUniqueDynamic(this, &AMyPlayerController::OnPlayerEnterHideSpot);
 
 	MyPlayerState->OnPlayerExitHideSpot.AddUniqueDynamic(this, &AMyPlayerController::OnPlayerExitHideSpot);
+
+	PauseMenu->OnResumeGame.AddUniqueDynamic(this, &AMyPlayerController::OnResumeGame);
+
+	PauseMenu->OnQuitGame.AddUniqueDynamic(this, &AMyPlayerController::OnQuitGame);
 }
 
 void AMyPlayerController::SetupInputComponent()
@@ -121,6 +125,20 @@ void AMyPlayerController::Throw(const FInputActionValue& Value)
 	}
 }
 
+void AMyPlayerController::OpenPauseMenu(const FInputActionValue& Value)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, "Open pause menu");
+	PauseMenu->AddToViewport();
+
+	DisableInput(this);
+
+	SetInputMode(InputModeUIOnly);
+
+	SetShowMouseCursor(true);
+
+	SetPause(true);
+}
+
 void AMyPlayerController::OnPlayerDeath()
 {
 	if (!IsDying)
@@ -173,4 +191,24 @@ void AMyPlayerController::OnPlayerEnterHideSpot(AActor* HideSpot)
 void AMyPlayerController::OnPlayerExitHideSpot()
 {
 	SetViewTargetWithBlend(MyChara, HideSpotCameraBlendTime);
+}
+
+void AMyPlayerController::OnResumeGame()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, "On Resume Game Listened");
+	PauseMenu->RemoveFromParent();
+
+	EnableInput(this);
+
+	SetInputMode(InputModeGameOnly);
+
+	SetShowMouseCursor(false);
+
+	SetPause(false);
+}
+
+void AMyPlayerController::OnQuitGame()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, "On Quit Game Listened");
+	UKismetSystemLibrary::QuitGame(GetWorld(), this, EQuitPreference::Quit, true);
 }

@@ -10,6 +10,7 @@
 #include "MyGameStateBase.h"
 #include "Items/GrabbableItem.h"
 #include "Camera/CameraComponent.h"
+#include "UI/UserWidget_PauseMenu.h"
 #include "MyPlayerController.generated.h"
 
 USTRUCT(BlueprintType)
@@ -38,6 +39,10 @@ private:
 	AMyGameStateBase* MyGameState = nullptr;
 
 	AMyPlayerState* MyPlayerState = nullptr;
+
+	FInputModeUIOnly InputModeUIOnly;
+
+	FInputModeGameOnly InputModeGameOnly;
 
 	float DefaultMaxSpeed = 0;
 
@@ -80,6 +85,9 @@ private:
 	UFUNCTION(BlueprintCallable)
 	void Throw(const FInputActionValue& Value);
 
+	UFUNCTION(BlueprintCallable)
+	void OpenPauseMenu(const FInputActionValue& Value);
+
 	UFUNCTION()
 	void OnPlayerDeath();
 
@@ -91,6 +99,12 @@ private:
 
 	UFUNCTION()
 	void OnPlayerExitHideSpot();
+
+	UFUNCTION()
+	void OnResumeGame();
+
+	UFUNCTION()
+	void OnQuitGame();
 	
 protected:
 	AMyPlayerController();
@@ -104,6 +118,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input|Data")
 	TArray<FInputData> InputDatas;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "UI")
+	TObjectPtr<UUserWidget_PauseMenu> PauseMenu = nullptr;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Input|Settings")
 	float CameraSensitivity = 50.f;
