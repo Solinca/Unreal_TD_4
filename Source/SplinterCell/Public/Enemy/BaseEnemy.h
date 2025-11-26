@@ -14,7 +14,7 @@ class SPLINTERCELL_API ABaseEnemy : public ACharacter, public IGroupable
 	GENERATED_BODY()
 
 private:
-	int PatrolIndex = 0;
+	int PatrolIndex = -1;
 
 	float StartingSpeed;
 

@@ -2,7 +2,6 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include "Components/TextBlock.h"
 #include "Components/Button.h"
 #include "UserWidget_PauseMenu.generated.h"
 

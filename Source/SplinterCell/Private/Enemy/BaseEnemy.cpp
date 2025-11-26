@@ -49,7 +49,7 @@ FVector ABaseEnemy::GetNextPatrolPointLocation()
 
 void ABaseEnemy::ResetPatrolIndex()
 {
-	PatrolIndex = 0;
+	PatrolIndex = -1;
 }
 
 void ABaseEnemy::SetPlayerCatchSpeed()

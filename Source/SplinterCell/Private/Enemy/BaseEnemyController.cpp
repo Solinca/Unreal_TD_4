@@ -53,6 +53,7 @@ void ABaseEnemyController::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus 
 		if (GetBlackboardComponent()->GetValueAsEnum(FName("EnemyState")) != (uint8)EENEMY_STATE::ALERTED)
 		{
 			GetBlackboardComponent()->SetValueAsEnum(FName("EnemyState"), (uint8)EENEMY_STATE::SUSPICIOUS);
+
 			GetBlackboardComponent()->SetValueAsVector(FName("TargetLocation"), Stimulus.StimulusLocation);
 
 			EnemyPawn->TriggerSuspicionVFX();
