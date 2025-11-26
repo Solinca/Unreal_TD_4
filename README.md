@@ -10,39 +10,38 @@ Left Ctrl   -> Hold to crouch
 
 E           -> Grab an item if close enough to it (only bottles for now)
 
-Right Click -> If holding an item, triggers the aim
+Right Click -> If holding an item, trigger the aim
 
-Left Click  -> If aiming, throw the helded item
+Left Click  -> If aiming, throw the held item
 
 Escape      -> Trigger in game pause menu
 
 Inputs are disabled on death and during pause
 
 
-### UI Types:
-
-- Death  -> Fade to black with audio
-- Pause  -> Can "Resume game" or "Quit game"
-
-
 ### IA Behavior:
 
-3 different behavior tree associated with a state:
+3 different behavior trees associated with a state:
 
 - CALM       => Simple patrolling system between points. If no patrol points are registered, it will simply stay on the spot.
-- SUSPICIOUS => If a sound as been triggered near the IA, it will go to the sound position to investigate. After 5s without triggering a new sound, it will go back to the CALM state.
-- ALERTED    => Once an IA has made visual contact with the player, all is doomed. The IA will proced to sprint towards the player, and trigger the death screen on contact with him.
+- SUSPICIOUS => If a sound has been triggered near the IA, it will go to the sound position to investigate. After 5s without triggering a new sound, it will go back to the CALM state.
+- ALERTED    => Once an AI has made visual contact with the player, all is doomed. The AI will proceed to sprint towards the player, and trigger the death screen on contact with him.
 
 
 ### Checkpoint System:
 
-Checkpoints are invisible and in-betwen game segments. On player death, everything will reload to its initial position and the player will be teleported to the latest checkpoint registered.
+Checkpoints are invisible and in betwen game segments. On player death, everything will reload to its initial position and the player will be teleported to the latest checkpoint registered.
 
 
 ### Hide Spots System:
 
 When entering a Hide Spot, the camera will switch to its Hide Spot counterpart. Upon leaving it, it will switch back to the Player's one.
 Controls during a Hide Spot are the same as usual, so it may be counter-intuitive.
+
+
+### Extraction System:
+
+When reaching the end of the labyrinth, a fade to black will occur with a change level to Victory level with a victory theme.
 
 
 ### Imported Assets (sounds are modified with Audacity):
